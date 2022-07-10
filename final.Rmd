@@ -1,0 +1,40 @@
+---
+title: "covid variant"
+author: "Phoebe LI"
+date: "7/10/2022"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+
+```{r}
+COVID19_Variants <- read.csv('covid19_variants.csv')
+COVID19_Variants$date <- as.Date(COVID19_Variants$date)
+```
+
+```{r}
+head(COVID19_Variants, 3)
+```
+
+```{r}
+list(COVID19_Variants$variant_name)
+```
+
+```{r}
+plot<- COVID19_Variants %>%
+  filter(COVID19_Variants$variant_name !='Other' & COVID19_Variants$variant_name != 'Total')
+```
+
+
+```{r}
+ggplot(data=plot, aes(date, percentage, color= variant_name)) +
+  geom_line() + ggtitle("COVID-19 Variants in CA") +
+  xlab("Date") + ylab("Sequenced Specimens (%)") + scale_x_date(breaks = scales::breaks_pretty(10))
+```
+
